@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #1C1C1C;
+  --color-sidebar: #111111;
+  --color-card-stroke: #2D2D2D;
+  --color-txt-primary: #FFFFFF;
+  --color-txt-secondary: #A1A1A1;
+  --color-accent: #4B4B4B;
+}
+
+body {
+  @apply bg-bg text-txt-primary;
+}
