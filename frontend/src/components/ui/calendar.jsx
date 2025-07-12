@@ -39,7 +39,7 @@ function Calendar({
         ...formatters,
       }}
       classNames={{
-        root: cn("w-fit", defaultClassNames.root),
+        root: cn("w-full h-full", defaultClassNames.root),
         months: cn("flex gap-4 flex-col md:flex-row relative", defaultClassNames.months),
         month: cn("flex flex-col w-full gap-4", defaultClassNames.month),
         nav: cn(
@@ -105,7 +105,7 @@ function Calendar({
       }}
       components={{
         Root: ({ className, rootRef, ...props }) => {
-          return (<div data-slot="calendar" ref={rootRef} className={cn(className)} {...props} />);
+          return (<div data-slot="calendar" ref={rootRef} className={cn("w-full h-full flex flex-col",className)} {...props} />);
         },
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {

@@ -10,10 +10,10 @@ export function Spendingdonut() {
         labels: ['Subscriptions', 'Utilities', 'Bills', 'Shopping', 'Food'],
         datasets: [{
             label: 'Spending',
-            data: [150, 250, 300, 1299, 8.50],
+            data: [150,250, 300, 1299, 8.50],
             backgroundColor: [], // filled by useEffect
-            borderColor: '',     // filled by useEffect
-            borderWidth: 2,
+            borderColor: '#FFFFFF',     // filled by useEffect
+            borderWidth: 0.8,
         }],
     });
 
@@ -23,10 +23,10 @@ export function Spendingdonut() {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'right',
+                position: 'bottom',
                 labels: {
-                    color: '', // filled by useeffect
-                    padding: 20,
+                    color: '#FFFFFF', // filled by useeffect
+                    padding: 10,
                     font: { size: 14 },
                 },
             },
@@ -45,15 +45,16 @@ export function Spendingdonut() {
             rootStyles.getPropertyValue('--chart-5').trim(),
         ];
 
-        const cardColor = rootStyles.getPropertyValue('--card').trim();
-        const foregroundColor = rootStyles.getPropertyValue('--foreground').trim();
+        const cardColor = rootStyles.getPropertyValue('--bg').trim();
+        const foregroundColor = rootStyles.getPropertyValue('--foreground-color').trim();
+        const borderColor = rootStyles.getPropertyValue('--border').trim();
         
         setChartData(prevData => ({
             ...prevData,
             datasets: [{
                 ...prevData.datasets[0],
                 backgroundColor: colors,
-                borderColor: cardColor,
+                borderColor: borderColor,
             }]
         }));
 
@@ -65,7 +66,7 @@ export function Spendingdonut() {
                     ...prevOptions.plugins.legend,
                     labels: {
                         ...prevOptions.plugins.legend.labels,
-                        color: foregroundColor,
+                        color: borderColor,
                     }
                 }
             }
@@ -73,8 +74,11 @@ export function Spendingdonut() {
     }, []); //empty array so effect runs only once on mount
 
     return (
-        <div className="relative h-64 md:h-full">
-            <Doughnut data={chartData} options={chartOptions} />
-        </div>
+    <div className="flex flex-col items-center justify-center w-full h-auto mt-15">
+    <div className="w-64 h-64 md:w-80 md:h-80 relative mb-4">
+      <Doughnut data={chartData} options={chartOptions} />
+    </div>
+    </div>
     );
+
 }

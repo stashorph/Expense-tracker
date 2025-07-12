@@ -1,7 +1,7 @@
-export default function Card({ title, action, children }) {
+export default function Card({ title, action, children, className }) {
   return (
-    <div className="bg-sidebar border border-card-stroke rounded-lg p-5 flex flex-col">
-      <div className="flex items-center justify-between mb-4">
+    <div className={`rounded-lg p-4 glow-hover lift-up ${className}`}>
+      <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-txt-primary">{title}</h3>
         {action}
       </div>
