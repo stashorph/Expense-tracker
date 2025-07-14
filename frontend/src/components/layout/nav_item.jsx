@@ -1,23 +1,18 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
-export default function NavItem({ href, children }) {
-  const router = useRouter();
-  const isActive = router.pathname === href;
-
+export default function NavItem({ icon, label, href, Expand }) {
   return (
-    <Link 
-      href={href}
-      className={`
-        flex items-center px-3 py-2 text-sm font-medium rounded-md
-        transition-colors duration-200
-        ${isActive
-          ? 'bg-accent text-txt-primary'
-          : 'text-txt-secondary hover:bg-accent/50 hover:text-txt-primary'
-        }
-      `}
+    <Link
+      href={href || '#'}
+      className="flex items-center p-3 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200"
     >
-      {children}
+      {icon}
+      
+      <span
+        className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out ${Expand ? 'w-full ml-4 opacity-100' : 'w-0 ml-0 opacity-0'}`}
+      >
+        {label}
+      </span>
     </Link>
   );
 }

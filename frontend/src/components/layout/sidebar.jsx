@@ -1,75 +1,41 @@
+"use client";
+import { useState } from 'react';
 import NavItem from './nav_item';
-import { 
-  LayoutDashboard, 
-  BarChart3, 
-  FolderKanban,
-  ArrowRightLeft,
-  ReceiptText,
-  CreditCard,
-  User
-} from 'lucide-react';
+import { LayoutGrid, BarChartHorizontal, FolderKanban, ArrowRightLeft, FileText, CreditCard, UserCircle } from 'lucide-react';
+
 
 export default function Sidebar() {
-  return (
-    <aside className="w-64 flex-shrink-0 bg-sidebar p-4 flex flex-col">
+  const [Expand, setExpand] = useState(false);
 
-      <div className="flex items-center mb-8 px-2">
-        <div className="w-8 h-8 rounded-md mr-3 scale-up"><NavItem href="/profile"><User className="transform scale-275 h-4.5 w-5 text-white"></User></NavItem></div>
-        <h1 className="text-xl font-bold text-txt-primary">My Dashboard</h1>
+  return (
+    <aside
+      className={`h-screen bg-card text-card-foreground p-4 flex flex-col transition-all duration-300 ease-in-out ${Expand ? 'w-64' : 'w-20'}`}
+      onMouseEnter={() => setExpand(true)}
+      onMouseLeave={() => setExpand(false)}
+      >
+      <div className="flex items-center gap-4 px-2 mb-2 h-10">
+        <UserCircle size={25} className="flex-shrink-0" />
+        <span className={`font-bold overflow-hidden whitespace-nowrap transition-opacity duration-300 ${Expand ? 'opacity-100' : 'opacity-0'}`}>
+          My Dashboard
+        </span>
       </div>
 
-      <nav className="flex-1 flex flex-col space-y-6">
-        <div>
-          <h2 className="px-3 mb-2 text-xs font-semibold tracking-wider uppercase text-txt-secondary">
-            OVERVIEW
-          </h2>
-          <div className="space-y-1">
-            <div className="scale-up">
-            <NavItem href="/dashboard">
-              <LayoutDashboard className="mr-3 h-5 w-5" />
-              Dashboard
-            </NavItem>
-            </div>
-            <div className="scale-up">
-            <NavItem href="/analytics">
-              <BarChart3 className="mr-3 h-5 w-5" />
-              Analytics
-            </NavItem>
-            </div>
-            <div className="scale-up">
-            <NavItem href="/projects">
-              <FolderKanban className="mr-3 h-5 w-5" />
-              Projects
-            </NavItem>
-            </div>
-          </div>
-        </div>
-        
-        <div>
-          <h2 className="px-3 mb-2 text-xs font-semibold tracking-wider uppercase text-txt-secondary">
-            FINANCE
-          </h2>
-          <div className="space-y-1">
-            <div className="scale-up">
-            <NavItem href="/transactions">
-              <ArrowRightLeft className="mr-3 h-5 w-5" />
-              Transactions
-            </NavItem>
-            </div>
-            <div className="scale-up">
-            <NavItem href="/invoices">
-              <ReceiptText className="mr-3 h-5 w-5" />
-              Invoices
-            </NavItem>
-            </div>
-            <div className="scale-up">
-            <NavItem href="/payments">
-              <CreditCard className="mr-3 h-5 w-5" />
-              Payments
-            </NavItem>
-            </div>
-          </div>
-        </div>
+      <nav className="flex-1 flex flex-col space-y-1">
+        <h3 className={`text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 mt-4 mb-1 overflow-hidden transition-opacity duration-300 ${Expand ? 'opacity-100' : 'opacity-0'}`}>
+          OVERVIEW
+        </h3>
+        <NavItem label="Dashboard" icon={<LayoutGrid size={25} />} href="/dashboard" Expand={Expand} />
+        <NavItem label="Analytics" icon={<BarChartHorizontal size={25} />} href="/analytics" Expand={Expand} />
+        <NavItem label="Projects" icon={<FolderKanban size={25} />} href="/projects" Expand={Expand} />
+
+        <div className={`border-t border-border mx-3 my-2 transition-all duration-300 ${Expand ? 'opacity-0 max-h-0' : 'opacity-100 max-h-full'}`} aria-hidden="true"/>
+
+        <h3 className={`text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 mt-4 mb-1 overflow-hidden transition-opacity duration-300 ${Expand ? 'opacity-100' : 'opacity-0'}`}>
+          FINANCE
+        </h3>
+        <NavItem label="Transactions" icon={<ArrowRightLeft size={25} />} href="/transactions" Expand={Expand} />
+        <NavItem label="Invoices" icon={<FileText size={25} />} href="/invoices" Expand={Expand} />
+        <NavItem label="Payments" icon={<CreditCard size={25} />} href="/payments" Expand={Expand} />
       </nav>
     </aside>
   );
