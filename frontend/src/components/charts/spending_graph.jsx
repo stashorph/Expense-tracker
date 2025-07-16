@@ -1,84 +1,91 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'; // Import Tooltip
 
 export function Spendingdonut() {
-    const [chartData, setChartData] = useState({
-        labels: ['Subscriptions', 'Utilities', 'Bills', 'Shopping', 'Food'],
-        datasets: [{
-            label: 'Spending',
-            data: [150,250, 300, 1299, 8.50],
-            backgroundColor: [], // filled by useEffect
-            borderColor: '#FFFFFF',     // filled by useEffect
-            borderWidth: 0.8,
-        }],
-    });
+  const [animationKey, setAnimationKey] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const data = [
+    { name: 'Subscriptions', value: 150, color: '#6366f1' },
+    { name: 'Utilities', value: 250, color: '#8b5cf6' },
+    { name: 'Bills', value: 300, color: '#06b6d4' },
+    { name: 'Shopping', value: 1299, color: '#10b981' },
+    { name: 'Food', value: 8.50, color: '#f59e0b' },
+  ];
+  const total = data.reduce((sum, item) => sum + item.value, 0);
 
-    // State for chart options, also with dynamic colors
-    const [chartOptions, setChartOptions] = useState({
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: {
-                    color: '#FFFFFF', // filled by useeffect
-                    padding: 10,
-                    font: { size: 14 },
-                },
-            },
-        },
-        cutout: '70%',
-    });
+  const CustomTooltip = ({ active, payload }) => {
+      if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg p-3 shadow-xl">
+          <p className="text-white font-medium">{data.name}</p>
+          <p className="text-cyan-400 font-bold">${data.value.toLocaleString()}</p>
+          <p className="text-gray-400 text-sm">
+            {((data.value / total) * 100).toFixed(1)}% of total
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
 
-    useEffect(() => {
-        const rootStyles = getComputedStyle(document.documentElement);
-
-        const colors = [
-            rootStyles.getPropertyValue('--chart-1').trim(),
-            rootStyles.getPropertyValue('--chart-2').trim(),
-            rootStyles.getPropertyValue('--chart-3').trim(),
-            rootStyles.getPropertyValue('--chart-4').trim(),
-            rootStyles.getPropertyValue('--chart-5').trim(),
-        ];
-
-        const cardColor = rootStyles.getPropertyValue('--bg').trim();
-        const foregroundColor = rootStyles.getPropertyValue('--foreground-color').trim();
-        const borderColor = rootStyles.getPropertyValue('--border').trim();
-        
-        setChartData(prevData => ({
-            ...prevData,
-            datasets: [{
-                ...prevData.datasets[0],
-                backgroundColor: colors,
-                borderColor: borderColor,
-            }]
-        }));
-
-        setChartOptions(prevOptions => ({
-            ...prevOptions,
-            plugins: {
-                ...prevOptions.plugins,
-                legend: {
-                    ...prevOptions.plugins.legend,
-                    labels: {
-                        ...prevOptions.plugins.legend.labels,
-                        color: borderColor,
-                    }
-                }
-            }
-        }));
-    }, []); //empty array so effect runs only once on mount
-
-    return (
-    <div className="flex flex-col items-center justify-center w-full h-auto mt-15">
-    <div className="w-64 h-64 md:w-80 md:h-80 relative mb-4">
-      <Doughnut data={chartData} options={chartOptions} />
+  return (
+    // Change 1: The container is now larger and centered with flex.
+    <div className="relative h-80 flex items-center justify-center">
+      <ResponsiveContainer width="100%" height="100%">
+        {/* Change 2: Added a margin to the chart to prevent cropping */}
+        <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+          <Tooltip content={<CustomTooltip />} />
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={65}
+            outerRadius={100}
+            paddingAngle={3}
+            dataKey="value"
+            animationBegin={0}
+            animationDuration={1000}
+            onMouseEnter={(_, index) => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.color}
+                stroke={hoveredIndex === index ? '#ffffff' : 'transparent'}
+                strokeWidth={hoveredIndex === index ? 2 : 0}
+                className="transition-all duration-300 cursor-pointer"
+                style={{
+                  filter: hoveredIndex === index 
+                    ? `drop-shadow(0 0 12px ${entry.color}80) brightness(1.2)` 
+                    : `drop-shadow(0 0 6px ${entry.color}40)`,
+                }}
+              />
+            ))}
+          </Pie>
+          <Pie
+            data={[{ value: 1 }]}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={65}
+            fill="rgba(107, 114, 128, 0.2)"
+            dataKey="value"
+            startAngle={0}
+            endAngle={360}
+          />
+        </PieChart>
+      </ResponsiveContainer>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-white">
+            ${total.toLocaleString()}
+          </div>
+          <div className="text-xs text-gray-400">Total</div>
+        </div>
+      </div>
     </div>
-    </div>
-    );
-
+  );
 }
