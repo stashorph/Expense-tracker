@@ -1,6 +1,6 @@
 import Card from '../components/ui/card';
 import Button from '../components/ui/button';
-import { Spendingdonut } from '../components/charts/spending_graph';
+import { Spendingdonut } from '../components/charts/monthly_donut';
 import TransactionsList from '../components/dashboard/transaction_list';
 import AccountsList from '../components/dashboard/accounts_list';
 import UpcomingEvents from '../components/dashboard/upcoming_events';
@@ -19,7 +19,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <div className="lg:col-span-1 flex flex-col gap-6">
-          <Card title="Accounts" action={<Button>View all</Button>}>
+          <Card title="Accounts">
             <AccountsList />
           </Card>
           <Card title="Spending Breakdown">
@@ -33,9 +33,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="lg:col-span-1">
-          <Card 
-            title="Recent Transactions" action={<Button>View all</Button>} className="h-full"
-          >
+          <Card title="Recent Transactions" className="flex flex-col h-full">
             <TransactionsList />
           </Card>
         </div>

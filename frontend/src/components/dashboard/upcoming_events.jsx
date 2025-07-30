@@ -16,12 +16,12 @@ const status = {
 }
 
 const ITEMS = [
-    { id: "1", title: "Emergency Fund", icon: PiggyBank, iconStyle: "savings", date: "Target: Jul 2025", amount: "Rs 10,15,000", status: "in-progress", progress: 65 },
-    { id: "2", title: "Stock Portfolio", icon: TrendingUp, iconStyle: "investment", date: "Target: Jul 2025", amount: "Rs 1,50,000", status: "pending", progress: 90 },
-    { id: "3", title: "Debt Repayment", icon: CreditCard, iconStyle: "debt", date: "Target: Jul 2025", amount: "Rs 25,000", status: "in-progress", progress: 45 },
-    { id: "4", title: "Vacation Fund", icon: TreePalmIcon, iconStyle: "savings", date: "Target: Jul 2025", amount: "Rs 55,000", status: "in-progress", progress: 20 },
-    { id: "5", title: "Education Loan", icon: CreditCard, iconStyle: "debt", date: "Target: Jul 2025", amount: "Rs 5,25,000", status: "in-progress", progress: 75 },
-    { id: "6", title: "Car Loan", icon: CreditCard, iconStyle: "debt", date: "Target: Jul 2025", amount: "Rs 7,50,000", status: "completed", progress: 100 }
+    { id: "1", title: "Emergency Fund", icon: PiggyBank, iconStyle: "savings", date: "Target: Jul 2025", amount: 1015000, status: "in-progress", progress: 65 },
+    { id: "2", title: "Stock Portfolio", icon: TrendingUp, iconStyle: "investment", date: "Target: Jul 2025", amount: 150000, status: "pending", progress: 90 },
+    { id: "3", title: "Debt Repayment", icon: CreditCard, iconStyle: "debt", date: "Target: Jul 2025", amount: 25000, status: "in-progress", progress: 45 },
+    { id: "4", title: "Vacation Fund", icon: TreePalmIcon, iconStyle: "savings", date: "Target: Jul 2025", amount: 55000, status: "in-progress", progress: 20 },
+    { id: "5", title: "Education Loan", icon: CreditCard, iconStyle: "debt", date: "Target: Jul 2025", amount: 525000, status: "in-progress", progress: 75 },
+    { id: "6", title: "Car Loan", icon: CreditCard, iconStyle: "debt", date: "Target: Jul 2025", amount: 750000, status: "completed", progress: 100 }
 ]
 
 export default function UpcomingEvents({ items = ITEMS, className }) {
@@ -32,9 +32,9 @@ export default function UpcomingEvents({ items = ITEMS, className }) {
           <div
             key={item.id}
             className={cn(
-              "flex flex-col", "w-[340px] shrink-0", "bg-card border border-border", //Change border border-border to glow-hover lift-up to better match the theme.
-              "hover:border-zinc-700",
-              "transition-all duration-200", "rounded-xl shadow-sm",
+                "flex flex-col", "w-[340px] shrink-0", "bg-card border border-border", //Change border border-border to glow-hover lift-up to better match the theme.
+                "hover:border-zinc-700",
+                "transition-all duration-200", "rounded-xl shadow-sm",
             )}
           >
             <div className="p-4 space-y-3">
@@ -55,7 +55,6 @@ export default function UpcomingEvents({ items = ITEMS, className }) {
 
               <div>
                 <h3 className="text-sm font-medium text-foreground mb-1">{item.title}</h3>
-                <p className="text-xs text-muted-foreground line-clamp-2">{item.subtitle}</p>
               </div>
 
               {typeof item.progress === "number" && (
@@ -75,7 +74,7 @@ export default function UpcomingEvents({ items = ITEMS, className }) {
 
               {item.amount && (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-medium text-foreground">{item.amount}</span>
+                  <span className="text-sm font-medium text-foreground">₹{item.amount.toLocaleString('en-IN')}</span>
                   <span className="text-xs text-muted-foreground">target</span>
                 </div>
               )}

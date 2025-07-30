@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts'; // Import Tooltip
+import { useState } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 export function Spendingdonut() {
-  const [animationKey, setAnimationKey] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const data = [
     { name: 'Subscriptions', value: 150, color: '#6366f1' },
@@ -20,7 +19,7 @@ export function Spendingdonut() {
       return (
         <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700 rounded-lg p-3 shadow-xl">
           <p className="text-white font-medium">{data.name}</p>
-          <p className="text-cyan-400 font-bold">${data.value.toLocaleString()}</p>
+          <p className="text-cyan-400 font-bold">₹{data.value.toLocaleString()}</p>
           <p className="text-gray-400 text-sm">
             {((data.value / total) * 100).toFixed(1)}% of total
           </p>
@@ -31,10 +30,8 @@ export function Spendingdonut() {
   };
 
   return (
-    // Change 1: The container is now larger and centered with flex.
     <div className="relative h-80 flex items-center justify-center">
       <ResponsiveContainer width="100%" height="100%">
-        {/* Change 2: Added a margin to the chart to prevent cropping */}
         <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
           <Tooltip content={<CustomTooltip />} />
           <Pie
@@ -78,10 +75,10 @@ export function Spendingdonut() {
           />
         </PieChart>
       </ResponsiveContainer>
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="text-center">
           <div className="text-2xl font-bold text-white">
-            ${total.toLocaleString()}
+            ₹{total.toLocaleString()}
           </div>
           <div className="text-xs text-gray-400">Total</div>
         </div>
