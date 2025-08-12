@@ -84,10 +84,10 @@
     transform: scale(1.05);
   }
 .custom-scrollbar::-webkit-scrollbar {
-    height: 8px; /* Sets the height of the horizontal scrollbar */
+    height: 8px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent; /* Makes the track invisible */
+    background: transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: hsl(var(--border));
