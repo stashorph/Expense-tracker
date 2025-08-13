@@ -27,11 +27,17 @@ export default function LoginPage() {
   };
 
   const handleSocialLogin = async (provider) => {
-    const { error } = await supabase.auth.signInWithOAuth({ provider });
+    setError(null);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: provider,
+      options: { redirectTo: `${location.origin}/auth/callback`}
+    });
+
     if (error) {
       setError(error.message);
     }
   };
+
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-bg p-4">
