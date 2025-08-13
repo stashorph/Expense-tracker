@@ -39,10 +39,12 @@ export default function UpcomingEvents({ items = ITEMS, className }) {
           >
             <div className="p-4 space-y-3">
               <div className="flex items-start justify-between">
-                <div className={cn("p-2 rounded-lg", iconStyles[items.icon])}>
+                <div className={cn(
+                  "p-2 rounded-lg",
+                  iconStyles[item.iconStyle] ?? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+                )}>
                   <item.icon className="w-4 h-4" />
-                </div>
-                <div
+                </div>                <div
                   className={cn("px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1.5",
                     status[item.status].bg,
                     status[item.status].class,
